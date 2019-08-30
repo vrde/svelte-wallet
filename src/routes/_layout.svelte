@@ -1,17 +1,17 @@
 <script>
-	import Nav from '../components/Nav.svelte';
+  import Nav from "../components/Nav.svelte";
 
-	export let segment;
+  export let segment;
 </script>
 
 <style>
-	main {
-		position: relative;
-	}
+  main {
+    position: relative;
+  }
 </style>
 
 <main>
-	<slot></slot>
+  <slot />
 </main>
 
-<Nav {segment}/>
+<Nav {segment} />
