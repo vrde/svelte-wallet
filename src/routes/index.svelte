@@ -8,3 +8,4 @@
 
 <h1>Svelte Wallet</h1>
 <Balance />
+<a href="send">Send</a>

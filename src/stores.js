@@ -40,8 +40,13 @@ export const provider = derived(network, $network =>
   ethers.getDefaultProvider($network)
 );
 
+export const walletWithProvider = derived(
+  [provider, wallet],
+  ([$provider, $wallet]) => $wallet.connect($provider)
+);
+
 export const balance = derived(
-  [provider, wallet, network],
+  [provider, wallet],
   ([$provider, $wallet], set) => {
     const updateBalance = balance => set(balance);
     $provider.on($wallet.address, updateBalance);
