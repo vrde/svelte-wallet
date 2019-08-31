@@ -21,7 +21,9 @@ function loadMnemonic() {
   if (!mnemonic) {
     db.set("mnemonic", wallet.mnemonic);
   }
-  return writable(wallet.mnemonic);
+  const value = writable(wallet.mnemonic);
+  value.subscribe(current => db.set("mnemonic", current));
+  return value;
 }
 
 export const network = loadNetwork();

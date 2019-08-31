@@ -1,5 +1,11 @@
 <script>
-  import { network } from "../stores";
+  import { network, mnemonic } from "../stores";
+
+  let localMnemonic = $mnemonic;
+
+  function handleMnemonicSubmit() {
+    $mnemonic = localMnemonic;
+  }
 </script>
 
 <svelte:head>
@@ -8,10 +14,21 @@
 
 <h1>Settings</h1>
 
-<select bind:value={$network}>
-  <option value="homestead">homestead</option>
-  <option value="rinkeby">rinkeby</option>
-</select>
+<label>
+  Network:
+  <select bind:value={$network}>
+    <option value="homestead">homestead</option>
+    <option value="rinkeby">rinkeby</option>
+  </select>
+</label>
+
+<form on:submit|preventDefault={handleMnemonicSubmit}>
+  <label>
+    Seed phrase
+    <input bind:value={localMnemonic} />
+  </label>
+  <input type="submit" />
+</form>
 
 <ul>
   <li>
