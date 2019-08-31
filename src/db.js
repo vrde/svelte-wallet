@@ -1,3 +1,5 @@
+import { readable, writable } from "svelte/store";
+
 const inMemoryLocalStorage = (store = {}) => ({
   setItem: (k, v) => (store[k] = v),
   getItem: k => store[k]
@@ -36,11 +38,25 @@ class DB {
     return this.storage[key] !== undefined;
   }
 
-  getsert(key, fallback) {
+  getsert(key, valueOrFunction) {
+    let value;
     if (!this.has(key)) {
-      this.set(key, fallback);
+      if (valueOrFunction instanceof Function) {
+        value = valueOrFunction(key);
+      } else {
+        value = valueOrFunction;
+      }
+      this.set(key, value);
     }
     return this.get(key);
+  }
+
+  writable(key, valueOrFunction) {
+    const value = writable(this.getsert(key, valueOrFunction));
+    value.subscribe(current => {
+      this.set(key, current);
+    });
+    return value;
   }
 }
 
